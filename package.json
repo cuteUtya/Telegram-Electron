@@ -1,0 +1,35 @@
+{
+  "name": "electrogram",
+  "version": "0.0.1",
+  "description": "Electron based telegram desktop client",
+  "main": "index.js",
+  "scripts": {
+    "test": "test",
+    "start": "electron ." 
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tim-dev-hub/Electrogram.git"
+  },
+  "keywords": [
+    "Telegram",
+    "Tdlib",
+    "Typescript"
+  ],
+  "author": "Tim-dev-hub",
+  "license": "GPL-2.0-only",
+  "bugs": {
+    "url": "https://github.com/Tim-dev-hub/Electrogram/issues"
+  },
+  "homepage": "https://github.com/Tim-dev-hub/Electrogram#readme",
+  "dependencies": {
+    "electron": "^13.2.2",
+    "react": "^17.0.2",
+    "tdl": "^7.0.0",
+    "tdl-tdlib-addon": "^1.0.1",
+    "typescript": "^4.4.2"
+  },
+  "devDependencies": {
+    "tdlib-types": "^0.1001007.1"
+  }
+}
