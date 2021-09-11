@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "test",
-    "start": "electron ." 
+    "start": "tsc --build && webpack --config webpack.config.js && electron .",
+    "coldStart": "electron ."
   },
   "repository": {
     "type": "git",
@@ -24,12 +25,29 @@
   "homepage": "https://github.com/Tim-dev-hub/Electrogram#readme",
   "dependencies": {
     "electron": "^13.2.2",
+    "fluture": "8.0",
+    "lottie-web": "^5.7.13",
+    "path": "^0.12.7",
     "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-redux": "^7.2.4",
+    "redux": "^4.1.1",
+    "redux-promise": "^0.6.0",
+    "string-replace-loader": "^3.0.3",
+    "styled-components": "^5.3.1",
     "tdl": "^7.0.0",
     "tdl-tdlib-addon": "^1.0.1",
-    "typescript": "^4.4.2"
+    "typescript": "^4.4.2",
+    "webpack": "^5.51.1"
   },
   "devDependencies": {
-    "tdlib-types": "^0.1001007.1"
+    "@types/react-jss": "^10.0.0",
+    "css-loader": "^6.2.0",
+    "electron-devtools-installer": "^3.2.0",
+    "redux-devtools-extension": "^2.13.9",
+    "redux-thunk": "^2.3.0",
+    "style-loader": "^3.2.1",
+    "tdlib-types": "^0.1001007.1",
+    "webpack-cli": "^4.8.0"
   }
 }
