@@ -17,6 +17,10 @@ lib-cov
 # Coverage directory used by tools like istanbul
 coverage
 
+# some shit folders
+_td_files/
+_td_database/
+.idea/
 
 # nyc test coverage
 .nyc_output
