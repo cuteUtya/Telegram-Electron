@@ -1,8 +1,10 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import {AccentColor, Font, SecondaryHeadingColor} from '../../../../../AppStyles';
 import LoginInput from "../LoginInput";
 import {AddCSSSelector} from "../../../../../AddCSSSelector";
 import {Ripple} from "../../../RippleButton";
+import tgQr from "../../../../../tgqr/tg-qr";
+import {useSelector} from "react-redux";
 
 const Container = AddCSSSelector("#Container", {
     height: 480,
@@ -66,7 +68,15 @@ const loginLi = AddCSSSelector("#LoginLi",{
     fontSize: 24
 })
 
-const PhoneEnter = () => {
+interface IPhoneEnterProps{
+    qrConfirmLink?: string;
+}
+
+const PhoneEnter : React.FC<IPhoneEnterProps> = ({qrConfirmLink}: IPhoneEnterProps) => {
+    const [QrSource, setQrSource] = useState('amogus.png');
+    //draw qr
+    tgQr(qrConfirmLink, "amogus.png", false, 320).then((result) => setQrSource(result[0].src));
+
     return (
         <div style={{fontFamily: Font}} id={Container}>
             <div id={FormContainer}>
@@ -80,7 +90,7 @@ const PhoneEnter = () => {
                     </button>
             </div>
             <div id={qrContainer}>
-                <img style={{width:320, height: 320}}></img>
+                <img style={{width:320, height: 320}} src={QrSource}/>
                 <h1 style={{margin: 0}}>Enter using QR code</h1>
                 <ul id={loginUl}>
                     <li id={loginLi}>Open <span style={{color: AccentColor}}>Telegram</span> on your phone</li>

@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { AccentColor, Font, SecondaryHeadingColor } from '../../../../../AppStyles';
 import LoginInput from "../LoginInput";
 import { AddCSSSelector } from "../../../../../AddCSSSelector";
 import { Ripple } from "../../../RippleButton";
+import tgQr from "../../../../../tgqr/tg-qr";
 const Container = AddCSSSelector("#Container", {
     height: 480,
     width: 970,
@@ -56,7 +57,10 @@ const loginUl = AddCSSSelector("#loginUl", {
 const loginLi = AddCSSSelector("#LoginLi", {
     fontSize: 24
 });
-const PhoneEnter = () => {
+const PhoneEnter = ({ qrConfirmLink }) => {
+    const [QrSource, setQrSource] = useState('amogus.png');
+    //draw qr
+    tgQr(qrConfirmLink, "amogus.png", false, 320).then((result) => setQrSource(result[0].src));
     return (React.createElement("div", { style: { fontFamily: Font }, id: Container },
         React.createElement("div", { id: FormContainer },
             React.createElement("h1", { style: { margin: 0 } }, "Sign in to Telegram"),
@@ -67,7 +71,7 @@ const PhoneEnter = () => {
                 React.createElement("div", { id: sendCodeBtnText }, "Send code"),
                 React.createElement(Ripple, { duration: 1000, color: AccentColor }))),
         React.createElement("div", { id: qrContainer },
-            React.createElement("img", { style: { width: 320, height: 320 } }),
+            React.createElement("img", { style: { width: 320, height: 320 }, src: QrSource }),
             React.createElement("h1", { style: { margin: 0 } }, "Enter using QR code"),
             React.createElement("ul", { id: loginUl },
                 React.createElement("li", { id: loginLi },

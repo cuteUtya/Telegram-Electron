@@ -7,8 +7,13 @@ export const App = () => {
     var client = useSelector((state) => state.Client);
     switch (authState === null || authState === void 0 ? void 0 : authState._) {
         case 'authorizationStateWaitPhoneNumber':
+            //request qr
+            client.invoke({
+                _: "requestQrCodeAuthentication"
+            });
             return React.createElement(PhoneEnter, null);
-            break;
+        case 'authorizationStateWaitOtherDeviceConfirmation':
+            return React.createElement(PhoneEnter, { qrConfirmLink: authState.link });
     }
     return React.createElement(Load, null);
 };

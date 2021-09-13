@@ -10,10 +10,15 @@ export const App = () => {
 
     switch (authState?._){
         case 'authorizationStateWaitPhoneNumber':
-            return <PhoneEnter></PhoneEnter>
-            break;
+            //request qr
+            client.invoke({
+                _: "requestQrCodeAuthentication"
+            })
+            return <PhoneEnter/>
+
+        case 'authorizationStateWaitOtherDeviceConfirmation':
+            return <PhoneEnter qrConfirmLink={authState.link}/>
     }
 
-
-    return <Load></Load>
+    return <Load/>
 }

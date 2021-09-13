@@ -1,7 +1,6 @@
 import Client from 'tdl';
 import { TDLib } from "tdl-tdlib-addon";
 import { AuthStateChange } from "./Action";
-//import {useStore} from "react-redux";
 import { store } from "../react";
 function AppReduxer(state, action) {
     switch (action.type) {
@@ -19,11 +18,8 @@ class State {
             apiHash: "7c84903108b41b3872080707a6da6ad6"
         });
         this.AuthorizationState = "None";
-        //for debug
-        //@ts-ignore
+        // @ts-ignore
         document.__proto__.tdlib = this.Client;
-        //@ts-ignore
-        //document.__proto__.store = store;
         this.Client.connect().then(() => {
             const listener = v => {
                 console.log(v);
