@@ -62,12 +62,11 @@ export default async function tgQr (
   const img = document.createElement('img')
   if (logo) {
     img.src = logo
+
+    await new Promise(resolve => {
+      img.onload = () => resolve()
+    })
   }
-
-  await new Promise(resolve => {
-    img.onload = () => resolve()
-  })
-
   return create_canvas_qrcode(
     mqr,
     {
