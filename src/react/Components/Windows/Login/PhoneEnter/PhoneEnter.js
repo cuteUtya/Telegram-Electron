@@ -4,6 +4,9 @@ import LoginInput from "../LoginInput";
 import { AddCSSSelector } from "../../../../../AddCSSSelector";
 import { Ripple } from "../../../RippleButton";
 import tgQr from "../../../../../tgqr/tg-qr";
+import { useDispatch } from "react-redux";
+import { OpenNewClientWithPhoneNumber } from "../../../../../Redux/Action";
+import { PhoneInput } from "./PhoneInput";
 const Container = AddCSSSelector("#Container", {
     height: 480,
     width: 970,
@@ -59,15 +62,17 @@ const loginLi = AddCSSSelector("#LoginLi", {
 });
 const PhoneEnter = ({ qrConfirmLink }) => {
     const [QrSource, setQrSource] = useState('amogus.png');
-    //draw qr
+    const [phoneNumber, setPhoneNumber] = useState('');
+    const [country, setCountry] = useState('');
     tgQr(qrConfirmLink, "amogus.png", false, 320).then((result) => setQrSource(result[0].src));
+    const dispatch = useDispatch();
     return (React.createElement("div", { style: { fontFamily: Font }, id: Container },
         React.createElement("div", { id: FormContainer },
             React.createElement("h1", { style: { margin: 0 } }, "Sign in to Telegram"),
             React.createElement("h2", { style: { margin: 0 } }, "Please confirm your country and enter your phone number."),
-            React.createElement(LoginInput, { description: "Country", onChange: null, topMargin: "36px" }),
-            React.createElement(LoginInput, { description: "Phone number", onChange: null, topMargin: "48px" }),
-            React.createElement("button", { id: sendCodeBtn },
+            React.createElement(LoginInput, { description: "Country", defaultValue: country, topMargin: "36px" }),
+            React.createElement(PhoneInput, { OnPhoneNumberChange: (phone) => setPhoneNumber(phone), OnCountryChange: (country) => setCountry(country) }),
+            React.createElement("button", { id: sendCodeBtn, onClick: () => dispatch({ type: OpenNewClientWithPhoneNumber, phoneNumber: phoneNumber }) },
                 React.createElement("div", { id: sendCodeBtnText }, "Send code"),
                 React.createElement(Ripple, { duration: 1000, color: AccentColor }))),
         React.createElement("div", { id: qrContainer },

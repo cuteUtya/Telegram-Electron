@@ -1,6 +1,9 @@
 import React from "react";
 import {AddCSSSelector} from "../../../../AddCSSSelector";
 import {InputDescriptionColor} from "../../../../AppStyles";
+import {fileTypeAnimation, phoneNumberInfo} from "tdlib-types";
+import {useSelector} from "react-redux";
+import {State} from "../../../../Redux/AppReduxer";
 
 
 const inpHeading = AddCSSSelector("#InputHeading", {
@@ -21,11 +24,18 @@ AddCSSSelector("#FormInput:focus",{
     outline: "none"
 })
 
-const LoginInput : React.FC<{description: String, onChange: (value) => any, topMargin: string}> = ({description, onChange, topMargin}) => {
+interface ILoginInputProps{
+    description: string;
+    onChange?: (value: React.ChangeEvent<HTMLInputElement>) => any;
+    topMargin: string;
+    defaultValue? : string;
+}
+
+const LoginInput : React.FC<ILoginInputProps> = ({description, onChange, topMargin, defaultValue}) =>{
     return (
         <div>
             <h3 id={inpHeading} style={{margin: 0, marginTop: topMargin}}>{description}</h3>
-            <input id={formInput}></input>
+            <input id={formInput} value={defaultValue} onChange={(value)  => onChange(value)}/>
         </div>)
 }
 

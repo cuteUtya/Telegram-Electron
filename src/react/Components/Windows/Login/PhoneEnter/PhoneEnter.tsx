@@ -1,10 +1,12 @@
-import React, {useEffect, useState} from 'react'
+import React, { useState} from 'react'
 import {AccentColor, Font, SecondaryHeadingColor} from '../../../../../AppStyles';
 import LoginInput from "../LoginInput";
 import {AddCSSSelector} from "../../../../../AddCSSSelector";
 import {Ripple} from "../../../RippleButton";
 import tgQr from "../../../../../tgqr/tg-qr";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector, useStore} from "react-redux";
+import {OpenNewClientWithPhoneNumber} from "../../../../../Redux/Action";
+import {PhoneInput} from "./PhoneInput";
 
 const Container = AddCSSSelector("#Container", {
     height: 480,
@@ -74,23 +76,27 @@ interface IPhoneEnterProps{
 
 const PhoneEnter : React.FC<IPhoneEnterProps> = ({qrConfirmLink}: IPhoneEnterProps) => {
     const [QrSource, setQrSource] = useState('amogus.png');
-    //draw qr
+    const [phoneNumber, setPhoneNumber] = useState('');
+    const [country, setCountry] = useState('');
     tgQr(qrConfirmLink, "amogus.png", false, 320).then((result) => setQrSource(result[0].src));
+
+    const dispatch = useDispatch();
 
     return (
         <div style={{fontFamily: Font}} id={Container}>
             <div id={FormContainer}>
                 <h1 style={{margin: 0}}>Sign in to Telegram</h1>
                 <h2 style={{margin: 0}}>Please confirm your country and enter your phone number.</h2>
-                <LoginInput description={"Country"} onChange={null} topMargin={"36px"}/>
-                <LoginInput description={"Phone number"} onChange={null} topMargin={"48px"}/>
-                    <button id={sendCodeBtn}>
-                        <div id={sendCodeBtnText}>Send code</div>
-                        <Ripple duration={1000} color={AccentColor} />
-                    </button>
+                <LoginInput description={"Country"} defaultValue={country} topMargin={"36px"}/>
+                <PhoneInput OnPhoneNumberChange={(phone) => setPhoneNumber(phone)} OnCountryChange={(country) => setCountry(country)}/>
+                <button id={sendCodeBtn}
+                        onClick={() => dispatch({type: OpenNewClientWithPhoneNumber, phoneNumber: phoneNumber})}>
+                    <div id={sendCodeBtnText}>Send code</div>
+                    <Ripple duration={1000} color={AccentColor}/>
+                </button>
             </div>
             <div id={qrContainer}>
-                <img style={{width:320, height: 320}} src={QrSource}/>
+                <img style={{width: 320, height: 320}} src={QrSource}/>
                 <h1 style={{margin: 0}}>Enter using QR code</h1>
                 <ul id={loginUl}>
                     <li id={loginLi}>Open <span style={{color: AccentColor}}>Telegram</span> on your phone</li>

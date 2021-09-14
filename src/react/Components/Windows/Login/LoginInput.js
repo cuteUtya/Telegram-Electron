@@ -16,9 +16,9 @@ const formInput = AddCSSSelector("#FormInput", {
 AddCSSSelector("#FormInput:focus", {
     outline: "none"
 });
-const LoginInput = ({ description, onChange, topMargin }) => {
+const LoginInput = ({ description, onChange, topMargin, defaultValue }) => {
     return (React.createElement("div", null,
         React.createElement("h3", { id: inpHeading, style: { margin: 0, marginTop: topMargin } }, description),
-        React.createElement("input", { id: formInput })));
+        React.createElement("input", { id: formInput, value: defaultValue, onChange: (value) => onChange(value) })));
 };
 export default LoginInput;
