@@ -35,15 +35,15 @@ export const PhoneInput : React.FC<IPhoneInputProps> = ({OnPhoneNumberChange, On
                     OnCountryChange(country);
             }
 
-            if(OnPhoneNumberChange != undefined)
-                OnPhoneNumberChange(value.target.value);
-
             value.target.value = formattedPhone;
         }
         lastInputCount = value.target.value.length;
     }
 
     return( <LoginInput description={"Phone number"} topMargin={"48px"}  onChange={(value) => {
+        if(OnPhoneNumberChange != undefined)
+            OnPhoneNumberChange(value.target.value);
+
         client.invoke({
             _: "getPhoneNumberInfo",
             phone_number_prefix: value.target.value

@@ -4,6 +4,8 @@ import {store} from "../react";
 import InitClient from '../Client';
 import {useState} from "react";
 import React from "react";
+import {useStore} from "react-redux";
+import {updateAuthorizationState} from "tdlib-types";
 
 function AppReduxer(state: State, action: any) : State{
     console.log('dispatch', action);
@@ -23,19 +25,40 @@ function AppReduxer(state: State, action: any) : State{
             * */
         case OpenNewClientWithPhoneNumber:
             state.ProcessUpdates = false;
-            state.Client.invoke({_: "logOut"}).then(() => {
-                console.log("Close");
-                InitClient().then((client) => {
-                    client.on('update', (v) => console.log('new client', v));
-                    client.invoke({
-                        _: "setAuthenticationPhoneNumber",
-                        phone_number: action.phoneNumber
-                    }).then(() => {
-                        state.Init(client);
-                        state.ProcessUpdates = true;
-                    })
+
+            console.log(state.Client);
+
+
+
+            /*
+     * JS обёртка умирает после 429 ошибки и не отсылает Tdlib никакие запросы, не знаю почему (((
+     * да блять почему
+     * */
+                state.Client.invoke({_: "logOut"}).then(() => {
+                    function InitNewClient(){
+                        InitClient().then((client) => {
+                            client.on('update',
+                                (v) => {
+                                    if(v._ === "updateAuthorizationState") {
+                                        if((v as updateAuthorizationState).authorization_state._ === "authorizationStateWaitCode") {
+                                            state.Init(client);
+                                            state.ProcessUpdates = true;
+                                            store.dispatch({
+                                                type: AuthStateChange,
+                                                state: (v as updateAuthorizationState).authorization_state
+                                            })
+                                        }
+                                    }
+                                });
+                            client.invoke({
+                                _: "setAuthenticationPhoneNumber",
+                                phone_number: action.phoneNumber
+                            })
+
+                        })
+                    }
                 })
-            })
+
             break;
     }
 
@@ -50,7 +73,11 @@ class State{
 
     Init(client: Client) {
         this.Client = client;
-        const listener = v => {
+        this.Client.invoke({_: "setLogVerbosityLevel", new_verbosity_level: 5});//{_: "setVerbosityLevel", verbosity_level: 5})
+
+        // @ts-ignore
+        document.__proto__.Client = this.Client;
+        const updateListener = v => {
             console.log(v);
             if(this.ProcessUpdates) {
                 switch (v._) {
@@ -60,7 +87,14 @@ class State{
                 }
             }
         }
-        this.Client.on('update', listener)
+
+        const errorListener = v => {
+            console.log(v);
+        }
+
+        this.Client.on('error', errorListener);
+        this.Client.on('update', updateListener)
+        this.Client.on('response', (res) => console.log(res));
     }
 
     constructor() {

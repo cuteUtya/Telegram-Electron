@@ -27,15 +27,17 @@ AddCSSSelector("#FormInput:focus",{
 interface ILoginInputProps{
     description: string;
     onChange?: (value: React.ChangeEvent<HTMLInputElement>) => any;
-    topMargin: string;
+    topMargin?: string;
     defaultValue? : string;
 }
 
-const LoginInput : React.FC<ILoginInputProps> = ({description, onChange, topMargin, defaultValue}) =>{
+const LoginInput : React.FC<ILoginInputProps> = ({description, onChange, topMargin, defaultValue}) => {
     return (
         <div>
             <h3 id={inpHeading} style={{margin: 0, marginTop: topMargin}}>{description}</h3>
-            <input id={formInput} value={defaultValue} onChange={(value)  => onChange(value)}/>
+            <input id={formInput} value={defaultValue} onChange={(value) => {
+                if (onChange != undefined) onChange(value)
+            }}/>
         </div>)
 }
 
