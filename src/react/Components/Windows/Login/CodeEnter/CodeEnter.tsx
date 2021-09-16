@@ -6,23 +6,7 @@ import {authenticationCodeInfo, authenticationCodeTypeTelegramMessage} from "tdl
 import {useSelector} from "react-redux";
 import {State} from "../../../../../Redux/AppReduxer";
 import {Sticker} from "../../../Sticker/Sticker";
-
-const container = AddCSSSelector(".CodeEnterContainer", {
-    FontFamily: Font,
-    flexDirection: "column",
-    position: "relative",
-    justifyContent: "center",
-    display: "flex",
-    top: 256,
-    alignItems: "center"
-})
-
-const secondaryTextLogin = AddCSSSelector(".LoginSecondaryTextLogin", {
-    fontSize: 24,
-    fontWeight: "400",
-    textAlign: "center",
-    color: SecondaryLoginTextColor
-})
+import {container, secondaryTextLogin} from "../Styles";
 
 AddCSSSelector(`.${container} > *`, {
     marginBottom: 18
