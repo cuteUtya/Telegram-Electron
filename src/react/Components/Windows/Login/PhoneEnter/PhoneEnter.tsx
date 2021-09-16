@@ -6,7 +6,7 @@ import tgQr from "../../../../../tgqr/tg-qr";
 import {useSelector} from "react-redux";
 import {PhoneInput} from "./PhoneInput";
 import {State} from "../../../../../Redux/AppReduxer";
-import {Ripple} from "../../../Common/RippleButton";
+import {RippleButton} from "../../../Common/RippleButton/RippleButton";
 
 const Container = AddCSSSelector("#Container", {
     height: 480,
@@ -32,16 +32,6 @@ AddCSSSelector("h2", {
     fontWeight: 500,
     fontSize: 24,
     color: SecondaryHeadingColor
-})
-
-const sendCodeBtn = AddCSSSelector("#sendCodeBtn", {
-    position: "relative",
-    width: "100%",
-    height: 68,
-    borderRadius: 16,
-    border: "none",
-    backgroundColor: "transparent",
-    marginTop: 56
 })
 
 const sendCodeBtnText = AddCSSSelector("#sendCodeBtnText", {
@@ -88,10 +78,7 @@ const PhoneEnter : React.FC<IPhoneEnterProps> = ({qrConfirmLink}: IPhoneEnterPro
                 <h2 style={{margin: 0}}>Please confirm your country and enter your phone number.</h2>
                 <LoginInput description={"Country"} defaultValue={country} topMargin={"36px"}/>
                 <PhoneInput OnPhoneNumberChange={(phone) => setPhoneNumber(phone)} OnCountryChange={(country) => setCountry(country)}/>
-                <button id={sendCodeBtn} onClick={() => client.invoke({_: "setAuthenticationPhoneNumber", phone_number: phoneNumber})}>
-                    <div id={sendCodeBtnText}>Send code</div>
-                    <Ripple duration={1000} color={AccentColor}/>
-                </button>
+                <RippleButton buttonText={"Send code"} onChange={() => client.invoke({_: "setAuthenticationPhoneNumber", phone_number: phoneNumber})}/>
             </div>
             <div id={qrContainer}>
                 <img style={{width: 320, height: 320}} src={QrSource}/>

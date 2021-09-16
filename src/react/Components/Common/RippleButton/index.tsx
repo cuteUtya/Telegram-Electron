@@ -1,6 +1,6 @@
 import React from "react";
 import { RippleContainer } from "./styles";
-import {AccentColor} from "../../../AppStyles";
+import {AccentColor} from "../../../../AppStyles";
 
 type RippleItem = {
     x: number;
