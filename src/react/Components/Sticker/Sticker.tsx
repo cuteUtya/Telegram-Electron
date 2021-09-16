@@ -11,21 +11,24 @@ interface IStickerProps<T extends 'svg' | 'canvas' | 'html' = 'svg'>{
 }
 
 export const Sticker: React.FC<IStickerProps> = ({render = 'svg', loop= true, autoplay = true, path, width, height}) => {
+    console.log("draw sticker");
     const randID = Math.random().toString() + new Date().toString() + path;
-
     useEffect(() => {
-        var element = document.getElementById(randID);
 
-        element.style.width = width;
-        element.style.height = height;
+        let element = document.getElementById(randID);
 
-        lottie.loadAnimation({
-            container: element,
-            renderer: render,
-            loop: loop,
-            autoplay: autoplay,
-            path: path
-        })
+        if(element.childElementCount == 0) {
+            element.style.width = width;
+            element.style.height = height;
+
+            lottie.loadAnimation({
+                container: element,
+                renderer: render,
+                loop: loop,
+                autoplay: autoplay,
+                path: path
+            })
+        }
     })
 
     return (<div id={randID}/>)
