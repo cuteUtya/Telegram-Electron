@@ -34,13 +34,6 @@ AddCSSSelector("h2", {
     color: SecondaryHeadingColor
 })
 
-const sendCodeBtnText = AddCSSSelector("#sendCodeBtnText", {
-    fontSize: 28,
-    fontWeight: "medium",
-    textAlign: "center",
-    color: AccentColor
-})
-
 const qrContainer = AddCSSSelector("#qrContainer", {
     width: 340,
     height: 480,
@@ -78,7 +71,7 @@ const PhoneEnter : React.FC<IPhoneEnterProps> = ({qrConfirmLink}: IPhoneEnterPro
                 <h2 style={{margin: 0}}>Please confirm your country and enter your phone number.</h2>
                 <LoginInput description={"Country"} defaultValue={country} topMargin={"36px"}/>
                 <PhoneInput OnPhoneNumberChange={(phone) => setPhoneNumber(phone)} OnCountryChange={(country) => setCountry(country)}/>
-                <RippleButton buttonText={"Send code"} onChange={() => client.invoke({_: "setAuthenticationPhoneNumber", phone_number: phoneNumber})}/>
+                <RippleButton buttonText={"Send code"} onClick={() => client.invoke({_: "setAuthenticationPhoneNumber", phone_number: phoneNumber})}/>
             </div>
             <div id={qrContainer}>
                 <img style={{width: 320, height: 320}} src={QrSource}/>
