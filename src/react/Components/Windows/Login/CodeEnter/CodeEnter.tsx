@@ -1,8 +1,8 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {AddCSSSelector} from "../../../../../AddCSSSelector";
-import {Font, SecondaryLoginTextColor} from "../../../../../AppStyles";
+import {DangerColor, Font, InputBottomLineColor, SecondaryLoginTextColor} from "../../../../../AppStyles";
 import LoginInput from "../LoginInput";
-import {authenticationCodeInfo, authenticationCodeTypeTelegramMessage} from "tdlib-types"
+import {authenticationCodeInfo, authenticationCodeTypeSms, authenticationCodeTypeTelegramMessage} from "tdlib-types"
 import {useSelector} from "react-redux";
 import {State} from "../../../../../Redux/AppReduxer";
 import {Sticker} from "../../../Sticker/Sticker";
@@ -18,20 +18,32 @@ interface ICodeEnterProps{
 
 export const CodeEnter : React.FC<ICodeEnterProps> = ({codeInfo})  => {
     const client = useSelector((state: State) => state.Client);
+    const [inputColor, setInputColor] = useState('');
 
-
-    return(
+    return (
         <div className={container}>
             <Sticker path={"utya/utyaduck_sendAsMessage.json"} loop={false} width={"256px"} height={"256px"}/>
             <h1>{codeInfo.phone_number}</h1>
             <h2 className={secondaryTextLogin}>We have sent you a message in Telegram with the code.</h2>
-            <LoginInput description={"Code"} onChange={(value) => {
-                switch (codeInfo.type._){
+            <LoginInput description={"Code"} inputStyle={{borderBottomColor: inputColor}} onChange={(value) => {
+                let codeLength = 0;
+                switch (codeInfo.type._) {
                     case "authenticationCodeTypeTelegramMessage":
-                        if(value.target.value.length === (codeInfo.type as authenticationCodeTypeTelegramMessage).length)
-                            client.invoke({_: "checkAuthenticationCode", code: value.target.value});
+                        codeLength = (codeInfo.type as authenticationCodeTypeTelegramMessage).length;//authorizationStateWaitCode
+                        break;
+                    case "authenticationCodeTypeSms":
+                        codeLength = (codeInfo.type as authenticationCodeTypeSms).length
                         break;
                 }
-                    }}/>
+
+                if (value.target.value.length === codeLength)
+                    client.invoke({
+                        _: "checkAuthenticationCode",
+                        code: value.target.value
+                    }).then(null, () => {
+                        setInputColor(DangerColor);
+                        setTimeout(() => setInputColor(''), 600)
+                    });
+            }}/>
         </div>);
 }

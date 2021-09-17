@@ -4,3 +4,6 @@ export const InputDescriptionColor = "#A9A9A9";
 export const SecondaryLoginTextColor = "#A9A9A9";
 export const InputBottomLineColor = "#D5DCE1";
 export const AccentColor = "#3390EC";
+export const ButtonAccentColor = "#E0EEFD";
+export const DangerColor = "#EC3333";
+export const DangerSecondary = "#FDE0E0";

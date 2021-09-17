@@ -1,6 +1,6 @@
-import React from "react";
+import React, {CSSProperties, useEffect, useState} from "react";
 import {AddCSSSelector} from "../../../../AddCSSSelector";
-import {InputDescriptionColor} from "../../../../AppStyles";
+import {DangerColor, InputBottomLineColor, InputDescriptionColor} from "../../../../AppStyles";
 import {fileTypeAnimation, phoneNumberInfo} from "tdlib-types";
 import {useSelector} from "react-redux";
 import {State} from "../../../../Redux/AppReduxer";
@@ -17,7 +17,8 @@ const formInput = AddCSSSelector("#FormInput", {
     height: 58,
     fontSize: 36,
     border: "none",
-    borderBottom: "solid 3px #D5DCE1"
+    borderBottom: `solid 3px ${InputBottomLineColor}`,
+    transition: "border-bottom-color 0.3s ease-in"
 })
 
 AddCSSSelector("#FormInput:focus",{
@@ -29,15 +30,19 @@ interface ILoginInputProps{
     onChange?: (value: React.ChangeEvent<HTMLInputElement>) => any;
     topMargin?: string;
     defaultValue? : string;
+    type?: string;
+    inputStyle? : CSSProperties
 }
 
-const LoginInput : React.FC<ILoginInputProps> = ({description, onChange, topMargin, defaultValue}) => {
+const LoginInput : React.FC<ILoginInputProps> = ({description, onChange, topMargin, defaultValue, type = "text", inputStyle}) => {
     return (
         <div>
             <h3 id={inpHeading} style={{margin: 0, marginTop: topMargin}}>{description}</h3>
-            <input id={formInput} value={defaultValue} onChange={(value) => {
+            <input id={formInput} style={inputStyle} value={defaultValue}
+                   onChange={(value) => {
                 if (onChange != undefined) onChange(value)
-            }}/>
+            }}
+            type={type}/>
         </div>)
 }
 
