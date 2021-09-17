@@ -16,6 +16,7 @@ interface IPasswordEnterProps{
 export const PasswordEnter : React.FC<IPasswordEnterProps> = ({authStateWaitPass, onForgetPass}) => {
     const client = useSelector((state: State) => state.Client);
     const [inputColor, setInputColor] = useState('');
+    const [password, setPassword] = useState('');
 
     return (
         <div className={container}>
@@ -24,20 +25,20 @@ export const PasswordEnter : React.FC<IPasswordEnterProps> = ({authStateWaitPass
                 <h1 style={{textAlign: "center"}}>Enter your password</h1>
                 <h2 className={secondaryTextLogin}>Your account is protected with an additional password.</h2>
                 <LoginInput description={authStateWaitPass.password_hint} inputStyle={{borderBottomColor: inputColor}}
-                            type={"password"}/>
+                            type={"password"} onChange={(value) => setPassword(value.target.value)}/>
                 <h2 className={clickableText} style={{margin: "16px 0px 0px 0px"}}
                     onClick={() => {
-                        if(onForgetPass != undefined) onForgetPass();
                         if (authStateWaitPass.has_recovery_email_address) {
                             client.invoke({_: "requestAuthenticationPasswordRecovery"})
                         } else {
                             //TODO goto tips how to recovery without mail
                         }
+                        if(onForgetPass != undefined) onForgetPass();
                     }}>Forget password?</h2>
                 <RippleButton buttonText={"Check password"}
-                              onClick={(value) => client.invoke({
+                              onClick={() => client.invoke({
                                   _: "checkAuthenticationPassword",
-                                  password: value.target.value
+                                  password: password
                               }).then(null, () => {
                                   setInputColor(DangerColor);
                                   setTimeout(() => setInputColor(''), WrongInputIndicationTimeMS);
