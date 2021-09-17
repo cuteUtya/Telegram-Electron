@@ -12,6 +12,7 @@ import {
 import InitClient from "../../../Client";
 import {apiHash, apiId} from "../../../AppConstanst";
 import {PasswordEnter} from "../Windows/Login/PasswordEnter/PasswordEnter";
+import {PasswordRoute} from "../Windows/Login/PasswordEnter/PasswordRoute";
 
 let QrClientInit = false;
 
@@ -52,7 +53,7 @@ export const App = () => {
             return <CodeEnter codeInfo={(authState as authorizationStateWaitCode).code_info}/>
 
         case 'authorizationStateWaitPassword':
-            return <PasswordEnter authStateWaitPass={authState as authorizationStateWaitPassword}/>
+            return <PasswordRoute authStateWaitPass={authState as authorizationStateWaitPassword}/>
     }
     return <Load/>
 }

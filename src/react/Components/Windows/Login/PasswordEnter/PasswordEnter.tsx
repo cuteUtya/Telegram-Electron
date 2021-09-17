@@ -27,7 +27,7 @@ export const PasswordEnter : React.FC<IPasswordEnterProps> = ({authStateWaitPass
                 <h2 className={clickableText} style={{margin: "16px 0px 0px 0px"}}
                     onClick={() => {
                         if (authStateWaitPass.has_recovery_email_address) {
-                            //TODO goto recovery by mail
+                            client.invoke({_: "requestAuthenticationPasswordRecovery"})
                         } else {
                             //TODO goto tips how to recovery without mail
                         }
