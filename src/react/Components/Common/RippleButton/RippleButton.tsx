@@ -1,5 +1,5 @@
 import React from "react";
-import {AccentColor} from "../../../../AppStyles";
+import {AccentColor, ButtonAccentColor} from "../../../../AppStyles";
 import {AddCSSSelector} from "../../../../AddCSSSelector";
 import {Ripple} from "./index";
 
@@ -9,13 +9,14 @@ const sendCodeBtn = AddCSSSelector("#sendCodeBtn", {
     height: 68,
     borderRadius: 16,
     border: "none",
-    backgroundColor: "transparent",
+    backgroundColor: ButtonAccentColor,
     marginTop: 56
 })
 
+
 const sendCodeBtnText = AddCSSSelector("#sendCodeBtnText", {
     fontSize: 28,
-    fontWeight: "medium",
+    fontWeight: "400",
     textAlign: "center",
     color: AccentColor
 })
@@ -26,14 +27,13 @@ interface IRippleButtonProps {
     buttonText: string;
     rippleDuration?: number;
     rippleColor?: string;
-    onChange?: (value) => any;
+    onClick?: (value) => any;
 }
 
-export const RippleButton : React.FC<IRippleButtonProps> = ({buttonStyle, textStyle, buttonText, rippleDuration = 1000, rippleColor = AccentColor, onChange}) => {
+export const RippleButton : React.FC<IRippleButtonProps> = ({buttonStyle, textStyle, buttonText, rippleDuration = 1000, rippleColor = "white", onClick}) => {
     return (
-        <button id={sendCodeBtn} style={buttonStyle} onChange={(value) => {if(onChange != undefined) onChange(value)}}>
+        <button id={sendCodeBtn} style={buttonStyle} onClick={(value) => onClick(value)!}>
             <div id={sendCodeBtnText} style={textStyle}>{buttonText}</div>
             <Ripple duration={rippleDuration} color={rippleColor}/>
         </button>)
 }
-
