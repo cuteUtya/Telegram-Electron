@@ -10,9 +10,10 @@ import {DangerColor, WrongInputIndicationTimeMS} from "../../../../../AppStyles"
 
 interface IPasswordEnterProps{
     authStateWaitPass: authorizationStateWaitPassword;
+    onForgetPass?: () => any;
 }
 
-export const PasswordEnter : React.FC<IPasswordEnterProps> = ({authStateWaitPass}) => {
+export const PasswordEnter : React.FC<IPasswordEnterProps> = ({authStateWaitPass, onForgetPass}) => {
     const client = useSelector((state: State) => state.Client);
     const [inputColor, setInputColor] = useState('');
 
@@ -26,6 +27,7 @@ export const PasswordEnter : React.FC<IPasswordEnterProps> = ({authStateWaitPass
                             type={"password"}/>
                 <h2 className={clickableText} style={{margin: "16px 0px 0px 0px"}}
                     onClick={() => {
+                        if(onForgetPass != undefined) onForgetPass();
                         if (authStateWaitPass.has_recovery_email_address) {
                             client.invoke({_: "requestAuthenticationPasswordRecovery"})
                         } else {

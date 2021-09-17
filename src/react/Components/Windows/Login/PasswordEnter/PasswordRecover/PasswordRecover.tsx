@@ -9,10 +9,11 @@ import {useSelector} from "react-redux";
 import {State} from "../../../../../../Redux/AppReduxer";
 
 interface IPasswordRecover{
-    authStateWaitPass: authorizationStateWaitPassword
+    authStateWaitPass: authorizationStateWaitPassword;
+    onRememberPassword: () => any;//Remember password?
 }
 
-export const PasswordRecover: React.FC<IPasswordRecover> = ({authStateWaitPass}) => {
+export const PasswordRecover: React.FC<IPasswordRecover> = ({authStateWaitPass, onRememberPassword}) => {
     const [inputColor, setInputColor] = useState('');
     const [code, setCode] = useState('');
     const client = useSelector((state: State) => state.Client);
@@ -24,13 +25,10 @@ export const PasswordRecover: React.FC<IPasswordRecover> = ({authStateWaitPass})
             <h2 className={secondaryTextLogin}>{`A message with a security code has been sent to your mail ${authStateWaitPass.recovery_email_address_pattern}.`}</h2>
             <LoginInput description={"Security code"} inputStyle={{borderBottomColor: inputColor}} onChange={(value) => setCode(value.target.value)}/>
             <h2 className={clickableText} style={{margin: "16px 0px 0px 0px"}}
-                onClick={() => {
-                    //TODO return to pass enter
-                }}>Remember password?</h2>
+                onClick={() => onRememberPassword()}>Remember password?</h2>
             <RippleButton buttonText={"Check code"}
                           onClick={() => {
                              client.invoke({_: "recoverAuthenticationPassword", recovery_code: code}).then(null, (reason) => {
-                                 console.log(reason);
                                  setInputColor(DangerColor);
                                  setTimeout(() => setInputColor(''), WrongInputIndicationTimeMS);
                              })
