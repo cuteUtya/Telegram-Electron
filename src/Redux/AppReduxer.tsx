@@ -31,7 +31,7 @@ class State{
         // @ts-ignore
         document.__proto__.Client = this.Client;
         const updateListener = v => {
-            console.log(v);
+            console.log(JSON.stringify(v));
             if(this.ProcessUpdates) {
                 switch (v._) {
                     case "updateAuthorizationState":
@@ -47,7 +47,6 @@ class State{
 
         this.Client.on('error', errorListener);
         this.Client.on('update', updateListener)
-        this.Client.on('response', (res) => console.log(res));
     }
 
     constructor() {
