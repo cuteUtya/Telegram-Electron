@@ -1,6 +1,12 @@
 import React, {useEffect, useState} from "react";
 import {AddCSSSelector} from "../../../../../AddCSSSelector";
-import {DangerColor, Font, InputBottomLineColor, SecondaryLoginTextColor} from "../../../../../AppStyles";
+import {
+    DangerColor,
+    Font,
+    InputBottomLineColor,
+    SecondaryLoginTextColor,
+    WrongInputIndicationTimeMS
+} from "../../../../../AppStyles";
 import LoginInput from "../LoginInput";
 import {authenticationCodeInfo, authenticationCodeTypeSms, authenticationCodeTypeTelegramMessage} from "tdlib-types"
 import {useSelector} from "react-redux";
@@ -42,7 +48,7 @@ export const CodeEnter : React.FC<ICodeEnterProps> = ({codeInfo})  => {
                         code: value.target.value
                     }).then(null, () => {
                         setInputColor(DangerColor);
-                        setTimeout(() => setInputColor(''), 600)
+                        setTimeout(() => setInputColor(''), WrongInputIndicationTimeMS)
                     });
             }}/>
         </div>);

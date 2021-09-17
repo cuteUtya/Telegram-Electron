@@ -7,3 +7,4 @@ export const AccentColor = "#3390EC";
 export const ButtonAccentColor = "#E0EEFD";
 export const DangerColor = "#EC3333";
 export const DangerSecondary = "#FDE0E0";
+export const WrongInputIndicationTimeMS = 600;
