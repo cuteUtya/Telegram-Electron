@@ -50,7 +50,7 @@ class State{
     }
 
     constructor() {
-        InitClient({apiId: apiId, apiHash: apiHash}).then((client) => this.Init(client));
+        InitClient({apiId: apiId, apiHash: apiHash, useTestDc: true}).then((client) => this.Init(client));
     }
 }
 
