@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {Sticker} from "../../../Sticker/Sticker";
 import LoginInput from "../LoginInput";
-import {authenticationCodeTypeTelegramMessage, authorizationStateWaitPassword} from "tdlib-types";
+import {authorizationStateWaitPassword} from "tdlib-types";
 import {useSelector} from "react-redux";
 import {State} from "../../../../../Redux/AppReduxer";
 import {clickableText, container, secondaryTextLogin} from "../Styles";
@@ -29,11 +29,10 @@ export const PasswordEnter : React.FC<IPasswordEnterProps> = ({authStateWaitPass
                 <h2 className={clickableText} style={{margin: "16px 0px 0px 0px"}}
                     onClick={() => {
                         if (authStateWaitPass.has_recovery_email_address) {
-                            client.invoke({_: "requestAuthenticationPasswordRecovery"})
+                            client.invoke({_: "requestAuthenticationPasswordRecovery"}).then(() =>  {if(onForgetPass != undefined) onForgetPass()});
                         } else {
                             //TODO goto tips how to recovery without mail
                         }
-                        if(onForgetPass != undefined) onForgetPass();
                     }}>Forget password?</h2>
                 <RippleButton buttonText={"Check password"}
                               onClick={() => client.invoke({
