@@ -6,13 +6,14 @@ import PhoneEnter from "../Windows/Login/PhoneEnter/PhoneEnter";
 import {CodeEnter} from "../Windows/Login/CodeEnter/CodeEnter";
 import {
     authorizationStateWaitCode,
-    authorizationStateWaitOtherDeviceConfirmation, authorizationStateWaitPassword,
+    authorizationStateWaitOtherDeviceConfirmation, authorizationStateWaitPassword, authorizationStateWaitRegistration,
     updateAuthorizationState
 } from "tdlib-types";
 import InitClient from "../../../Client";
 import {apiHash, apiId} from "../../../AppConstanst";
 import {PasswordEnter} from "../Windows/Login/PasswordEnter/PasswordEnter";
 import {PasswordRoute} from "../Windows/Login/PasswordEnter/PasswordRoute";
+import {RegistrationRoute} from "../Windows/Login/Registration/RegistrationRoute";
 
 let QrClientInit = false;
 
@@ -54,6 +55,9 @@ export const App = () => {
 
         case 'authorizationStateWaitPassword':
             return <PasswordRoute authStateWaitPass={authState as authorizationStateWaitPassword}/>
+
+        case 'authorizationStateWaitRegistration':
+            return <RegistrationRoute authStateWaitRegistration={authState as authorizationStateWaitRegistration}/>
     }
     return <Load/>
 }
