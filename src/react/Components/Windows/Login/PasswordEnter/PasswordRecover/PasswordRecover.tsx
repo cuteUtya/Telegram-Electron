@@ -10,10 +10,11 @@ import {State} from "../../../../../../Redux/AppReduxer";
 
 interface IPasswordRecover{
     authStateWaitPass: authorizationStateWaitPassword;
-    onRememberPassword: () => any;//Remember password?
+    onRememberPasswordClick: () => any;
+    onDoNotHaveMailAccessClick: () => any;
 }
 
-export const PasswordRecover: React.FC<IPasswordRecover> = ({authStateWaitPass, onRememberPassword}) => {
+export const PasswordRecover: React.FC<IPasswordRecover> = ({authStateWaitPass, onRememberPasswordClick, onDoNotHaveMailAccessClick}) => {
     const [inputColor, setInputColor] = useState('');
     const [code, setCode] = useState('');
     const client = useSelector((state: State) => state.Client);
@@ -25,7 +26,7 @@ export const PasswordRecover: React.FC<IPasswordRecover> = ({authStateWaitPass, 
             <h2 className={secondaryTextLogin}>{`A message with a security code has been sent to your mail ${authStateWaitPass.recovery_email_address_pattern}.`}</h2>
             <LoginInput description={"Security code"} inputStyle={{borderBottomColor: inputColor}} onChange={(value) => setCode(value.target.value)}/>
             <h2 className={clickableText} style={{margin: "16px 0px 0px 0px"}}
-                onClick={() => onRememberPassword()}>Remember password?</h2>
+                onClick={() => onRememberPasswordClick()}>Remember password?</h2>
             <RippleButton buttonText={"Check code"}
                           onClick={() => {
                              client.invoke({_: "recoverAuthenticationPassword", recovery_code: code}).then(null, (reason) => {
@@ -34,9 +35,8 @@ export const PasswordRecover: React.FC<IPasswordRecover> = ({authStateWaitPass, 
                              })
                           }}/>
             <RippleButton buttonText={"Do not have access to mail?"}
-                          onClick={(value) => {
-                              //TODO show tips frame
-                          }} buttonStyle={{marginTop: 36}}/>
+                          onClick={() => onDoNotHaveMailAccessClick() }
+                          buttonStyle={{marginTop: 36}}/>
         </div>
     </div>)
 }
