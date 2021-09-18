@@ -5,6 +5,7 @@ import {PasswordRecover} from "./PasswordRecover/PasswordRecover";
 import {PasswordRecoverTip} from "./PasswordRecoverTip/PasswordRecoverTip";
 import {useSelector} from "react-redux";
 import {State} from "../../../../../Redux/AppReduxer";
+import {DeleteAccount} from "./DeleteAccount/DeleteAccount";
 
 interface IPasswordRoute{
     authStateWaitPass: authorizationStateWaitPassword;
@@ -36,11 +37,12 @@ export const PasswordRoute: React.FC<IPasswordRoute> = ({authStateWaitPass}) => 
         //how to recover password without mail access
         case 2:
             return <PasswordRecoverTip
-                onBackToLastWindowClick={() => {
-                    if(authStateWaitPass.has_recovery_email_address)
-                        setPasswordRecoverState(1);
-                    else
-                        setPasswordRecoverState(0);
-                }}/>
+                onBackToLastWindowClick={() => setPasswordRecoverState(authStateWaitPass.has_recovery_email_address ? 1 : 0)}
+                onDoNotHaveAccountAccessClick={() => setPasswordRecoverState(3)}/>
+
+        //window with deleting account
+        case 3:
+            return <DeleteAccount
+                onDeleteAccountClick={() => client.invoke({_: "deleteAccount"})}/>
     }
 }
