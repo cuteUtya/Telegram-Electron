@@ -12,33 +12,33 @@ interface IPasswordRoute{
 }
 
 export const PasswordRoute: React.FC<IPasswordRoute> = ({authStateWaitPass}) => {
-    const [passwordRecoverState, setPasswordRecoverState] = useState(0);
+    const [passwordState, setPasswordState] = useState(0);
     const client = useSelector((state: State) => state.Client);
 
-    switch (passwordRecoverState) {
+    switch (passwordState) {
         //window with entering password
         case 0:
             return <PasswordEnter
                 authStateWaitPass={authStateWaitPass}
                 onForgetPasswordClick={() => {
                     if (authStateWaitPass.has_recovery_email_address) //{
-                        client.invoke({_: "requestAuthenticationPasswordRecovery"}).then(() => setPasswordRecoverState(1))
+                        client.invoke({_: "requestAuthenticationPasswordRecovery"}).then(() => setPasswordState(1))
                     else
-                        setPasswordRecoverState(2);
+                        setPasswordState(2);
                 }}/>
 
         //window with recovering password by mail
         case 1:
             return <PasswordRecover
                 authStateWaitPass={authStateWaitPass}
-                onRememberPasswordClick={() => setPasswordRecoverState(0)}
-                onDoNotHaveMailAccessClick={() => setPasswordRecoverState(2)}/>
+                onRememberPasswordClick={() => setPasswordState(0)}
+                onDoNotHaveMailAccessClick={() => setPasswordState(2)}/>
 
         //how to recover password without mail access
         case 2:
             return <PasswordRecoverTip
-                onBackToLastWindowClick={() => setPasswordRecoverState(authStateWaitPass.has_recovery_email_address ? 1 : 0)}
-                onDoNotHaveAccountAccessClick={() => setPasswordRecoverState(3)}/>
+                onBackToLastWindowClick={() => setPasswordState(authStateWaitPass.has_recovery_email_address ? 1 : 0)}
+                onDoNotHaveAccountAccessClick={() => setPasswordState(3)}/>
 
         //window with deleting account
         case 3:
