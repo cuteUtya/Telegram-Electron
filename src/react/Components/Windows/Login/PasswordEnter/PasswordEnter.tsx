@@ -10,10 +10,10 @@ import {DangerColor, WrongInputIndicationTimeMS} from "../../../../../AppStyles"
 
 interface IPasswordEnterProps{
     authStateWaitPass: authorizationStateWaitPassword;
-    onForgetPass?: () => any;
+    onForgetPasswordClick?: () => any;
 }
 
-export const PasswordEnter : React.FC<IPasswordEnterProps> = ({authStateWaitPass, onForgetPass}) => {
+export const PasswordEnter : React.FC<IPasswordEnterProps> = ({authStateWaitPass, onForgetPasswordClick}) => {
     const client = useSelector((state: State) => state.Client);
     const [inputColor, setInputColor] = useState('');
     const [password, setPassword] = useState('');
@@ -27,13 +27,7 @@ export const PasswordEnter : React.FC<IPasswordEnterProps> = ({authStateWaitPass
                 <LoginInput description={authStateWaitPass.password_hint} inputStyle={{borderBottomColor: inputColor}}
                             type={"password"} onChange={(value) => setPassword(value.target.value)}/>
                 <h2 className={clickableText} style={{margin: "16px 0px 0px 0px"}}
-                    onClick={() => {
-                        if (authStateWaitPass.has_recovery_email_address) {
-                            client.invoke({_: "requestAuthenticationPasswordRecovery"}).then(() =>  {if(onForgetPass != undefined) onForgetPass()});
-                        } else {
-                            //TODO goto tips how to recovery without mail
-                        }
-                    }}>Forget password?</h2>
+                    onClick={() => onForgetPasswordClick()}>Forget password?</h2>
                 <RippleButton buttonText={"Check password"}
                               onClick={() => client.invoke({
                                   _: "checkAuthenticationPassword",
