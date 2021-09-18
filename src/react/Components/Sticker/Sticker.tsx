@@ -14,6 +14,7 @@ export const Sticker: React.FC<IStickerProps> = ({render = 'svg', loop= true, au
     const randID = Math.random().toString() + new Date().toString() + path;
     useEffect(() => {
         let element = document.getElementById(randID);
+        element.innerHTML = '';
         element.style.width = width;
         element.style.height = height;
 
@@ -26,5 +27,9 @@ export const Sticker: React.FC<IStickerProps> = ({render = 'svg', loop= true, au
         })
     }, [])
 
-    return (<div id={randID}/>)
+    //#IsJustEmptyDiv to make sure the size is correct without sticker
+    return (
+        <div id={randID}>
+            <div id={"#IsJustEmptyDiv"} style={{width: width, height: height}}/>
+        </div>)
 }
