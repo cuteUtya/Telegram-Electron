@@ -23,7 +23,7 @@ export const TermOfService: React.FC<ITermOfServiceProps> = ({termOfService, onA
             </pre>
 
             <RippleButton buttonText={"Accept"}
-                          onClick={() => onAcceptClick}
+                          onClick={() => onAcceptClick()}
                           buttonStyle={{marginTop: 36}}/>
         </div>
     </div>)
