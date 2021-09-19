@@ -40,7 +40,7 @@ export const PhoneInput : React.FC<IPhoneInputProps> = ({OnPhoneNumberChange, On
         lastInputCount = value.target.value.length;
     }
 
-    return( <LoginInput description={"Phone number"} topMargin={"48px"}  onChange={(value) => {
+    return( <LoginInput description={"Phone number"} topMargin={"36px"}  onChange={(value) => {
         if(OnPhoneNumberChange != undefined)
             OnPhoneNumberChange(value.target.value);
 

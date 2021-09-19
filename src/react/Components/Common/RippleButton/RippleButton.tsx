@@ -6,11 +6,11 @@ import {Ripple} from "./index";
 const sendCodeBtn = AddCSSSelector("#sendCodeBtn", {
     position: "relative",
     width: "100%",
-    height: 68,
+    height: 56,
     borderRadius: 16,
     border: "none",
     backgroundColor: ButtonAccentColor,
-    marginTop: 56
+    marginTop: 48
 })
 
 

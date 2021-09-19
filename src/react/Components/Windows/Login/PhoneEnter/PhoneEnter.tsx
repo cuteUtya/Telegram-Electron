@@ -20,23 +20,23 @@ const Container = AddCSSSelector("#Container", {
 })
 
 const FormContainer = AddCSSSelector("#formContainer", {
-    width: 545,
+    width: 512,
     height: 480
 })
 
 AddCSSSelector("h1", {
-    fontSize: 28,
+    fontSize: 24,
 })
 
 AddCSSSelector("h2", {
     fontWeight: 500,
-    fontSize: 24,
+    fontSize: 22,
     color: SecondaryHeadingColor
 })
 
 const qrContainer = AddCSSSelector("#qrContainer", {
     width: 340,
-    height: 480,
+    height: 450,
     marginLeft: 84,
     backgroundColor: "#FEFEFE",
     gridTemplateRows: "min-content",
@@ -69,12 +69,12 @@ const PhoneEnter : React.FC<IPhoneEnterProps> = ({qrConfirmLink}: IPhoneEnterPro
             <div id={FormContainer}>
                 <h1 style={{margin: 0}}>Sign in to Telegram</h1>
                 <h2 style={{margin: 0}}>Please confirm your country and enter your phone number.</h2>
-                <LoginInput description={"Country"} defaultValue={country} topMargin={"36px"}/>
+                <LoginInput description={"Country"} defaultValue={country} topMargin={"24px"}/>
                 <PhoneInput OnPhoneNumberChange={(phone) => setPhoneNumber(phone)} OnCountryChange={(country) => setCountry(country)}/>
                 <RippleButton buttonText={"Send code"} onClick={() => client.invoke({_: "setAuthenticationPhoneNumber", phone_number: phoneNumber})}/>
             </div>
             <div id={qrContainer}>
-                <img style={{width: 320, height: 320}} src={QrSource}/>
+                <img style={{width: 250}} src={QrSource}/>
                 <h1 style={{margin: 0}}>Enter using QR code</h1>
                 <ul id={loginUl}>
                     <li id={loginLi}>Open <span style={{color: AccentColor}}>Telegram</span> on your phone</li>

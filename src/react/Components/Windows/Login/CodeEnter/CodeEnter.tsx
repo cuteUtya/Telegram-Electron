@@ -3,7 +3,7 @@ import {AddCSSSelector} from "../../../../../AddCSSSelector";
 import {
     DangerColor,
     Font,
-    InputBottomLineColor,
+    InputBorderColor,
     SecondaryLoginTextColor,
     WrongInputIndicationTimeMS
 } from "../../../../../AppStyles";
