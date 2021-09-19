@@ -2,7 +2,7 @@ import Client from 'tdl'
 import {AuthStateChange, OpenNewClientWithPhoneNumber} from "./Action";
 import {store} from "../react";
 import InitClient from '../Client';
-import {apiId, apiHash} from "../AppConstanst";
+import {apiId, apiHash, UseTestDC} from "../AppConstanst";
 import React from "react";
 import {updateAuthorizationState} from "tdlib-types";
 
@@ -50,7 +50,7 @@ class State{
     }
 
     constructor() {
-        InitClient({apiId: apiId, apiHash: apiHash, useTestDc: true}).then((client) => this.Init(client));
+        InitClient({apiId: apiId, apiHash: apiHash, useTestDc: UseTestDC}).then((client) => this.Init(client));
     }
 }
 
