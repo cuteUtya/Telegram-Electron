@@ -2,9 +2,8 @@ import Client from 'tdl'
 import {AuthStateChange, OpenNewClientWithPhoneNumber} from "./Action";
 import {store} from "../react";
 import InitClient from '../Client';
-import {apiId, apiHash, UseTestDC} from "../AppConstanst";
+import {apiId, apiHash, UseTestDC, Version} from "../AppConstanst";
 import React from "react";
-import {updateAuthorizationState} from "tdlib-types";
 
 function AppReduxer(state: State, action: any) : State{
     console.log('dispatch', action);
@@ -18,10 +17,9 @@ function AppReduxer(state: State, action: any) : State{
     return state;
 }
 
-class State{
+class State {
     public Client: Client;
     public AuthorizationState: any = "None";
-
     public ProcessUpdates: boolean = true;
 
     Init(client: Client) {
@@ -32,7 +30,7 @@ class State{
         document.__proto__.Client = this.Client;
         const updateListener = v => {
             console.log(JSON.stringify(v));
-            if(this.ProcessUpdates) {
+            if (this.ProcessUpdates) {
                 switch (v._) {
                     case "updateAuthorizationState":
                         store.dispatch({type: AuthStateChange, state: v.authorization_state})
@@ -50,7 +48,15 @@ class State{
     }
 
     constructor() {
-        InitClient({apiId: apiId, apiHash: apiHash, useTestDc: UseTestDC}).then((client) => this.Init(client));
+        InitClient({
+                apiId: apiId,
+                apiHash: apiHash,
+                useTestDc: UseTestDC,
+                tdlibParameters: {
+                    application_version: Version
+                }
+            }
+        ).then((client) => this.Init(client));
     }
 }
 
