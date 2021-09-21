@@ -69,9 +69,28 @@ const PhoneEnter : React.FC<IPhoneEnterProps> = ({qrConfirmLink}: IPhoneEnterPro
             <div id={FormContainer}>
                 <h1 style={{margin: 0}}>Sign in to Telegram</h1>
                 <h2 style={{margin: 0}}>Please confirm your country and enter your phone number.</h2>
-                <LoginInput description={"Country"} defaultValue={country} topMargin={"24px"}/>
-                <PhoneInput OnPhoneNumberChange={(phone) => setPhoneNumber(phone)} OnCountryChange={(country) => setCountry(country)}/>
-                <RippleButton buttonText={"Send code"} onClick={() => client.invoke({_: "setAuthenticationPhoneNumber", phone_number: phoneNumber})}/>
+                <LoginInput
+                    description={"Country"}
+                    defaultValue={country}
+                    topMargin={"24px"}
+                    onChange={(value) => {
+                        setCountry(value.target.value)
+                        client.invoke({_: "getCountries"}).then((countries) => {
+                            const filtered = countries.countries.filter((element) => {
+                                return element.name === value.target.value || element.english_name === value.target.value
+                            });
+                            setPhoneNumber(filtered.length > 0 ? `+${filtered[0].calling_codes[0]} ` : '');
+                        })
+                    }}/>
+                <PhoneInput OnPhoneNumberChange={(phone) => setPhoneNumber(phone)}
+                            defaultValue={phoneNumber}
+                            OnCountryChange={(country) => setCountry(country == undefined ? '' : country)}/>
+                <RippleButton
+                    buttonText={"Send code"}
+                    onClick={() => client.invoke({
+                    _: "setAuthenticationPhoneNumber",
+                    phone_number: phoneNumber
+                })}/>
             </div>
             <div id={qrContainer}>
                 <img style={{width: 250}} src={QrSource}/>
