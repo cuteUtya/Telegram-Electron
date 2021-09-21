@@ -7,9 +7,10 @@ import {State} from "../../../../../Redux/AppReduxer";
 interface IPhoneInputProps{
     OnPhoneNumberChange?: (value: string) => any;
     OnCountryChange?: (newCountry: string) => any;
+    defaultValue : string;
 }
 
-export const PhoneInput : React.FC<IPhoneInputProps> = ({OnPhoneNumberChange, OnCountryChange}) => {
+export const PhoneInput : React.FC<IPhoneInputProps> = ({OnPhoneNumberChange, OnCountryChange, defaultValue}) => {
     const client = useSelector((state: State) => state.Client);
     let lastInputCount = 0;
     let lastCountry = '';
@@ -28,7 +29,7 @@ export const PhoneInput : React.FC<IPhoneInputProps> = ({OnPhoneNumberChange, On
             }
 
             let country = phoneNumberInfo.country == undefined ? '' : phoneNumberInfo.country.name;
-            if(country != lastCountry){
+            if(country != lastCountry || country == ''){
                 lastCountry = country;
 
                 if(OnCountryChange != undefined)
@@ -40,7 +41,7 @@ export const PhoneInput : React.FC<IPhoneInputProps> = ({OnPhoneNumberChange, On
         lastInputCount = value.target.value.length;
     }
 
-    return( <LoginInput description={"Phone number"} topMargin={"36px"}  onChange={(value) => {
+    return( <LoginInput description={"Phone number"} defaultValue={defaultValue} topMargin={"36px"}  onChange={(value) => {
         if(OnPhoneNumberChange != undefined)
             OnPhoneNumberChange(value.target.value);
 
