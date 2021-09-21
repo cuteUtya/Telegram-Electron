@@ -15,13 +15,12 @@ const inpHeading = AddCSSSelector("#InputHeading", {
 const formInput = AddCSSSelector("#FormInput", {
     width: "100%",
     height: 48,
-    fontSize: 28,
+    fontSize: 22,
     backgroundColor: InputBackgroundColor,
     border: `solid 2px ${InputBorderColor}`,
     transition: "border-bottom-color 0.3s ease-in",
     borderRadius: 12,
-    padding: 24,
-    paddingLeft: 8,
+    padding: 12,
     boxSizing: "border-box"
 
 })
