@@ -14,6 +14,7 @@ import {apiHash, apiId} from "../../../AppConstanst";
 import {PasswordEnter} from "../Windows/Login/PasswordEnter/PasswordEnter";
 import {PasswordRoute} from "../Windows/Login/PasswordEnter/PasswordRoute";
 import {RegistrationRoute} from "../Windows/Login/Registration/RegistrationRoute";
+import {ChatList} from "../Windows/ChatList/ChatList";
 
 let QrClientInit = false;
 
@@ -23,7 +24,7 @@ export const App = () => {
     const [QrLink, SetQrLink] = useState("");
 
 
-    if (!QrClientInit) {
+    if (!QrClientInit && authState._ != "authorizationStateReady") {
         QrClientInit = true;
         InitClient(
             {
@@ -36,9 +37,9 @@ export const App = () => {
 
             client.on("update", (update) => {
                 if (update._ === "updateAuthorizationState")
-                    if ((update as updateAuthorizationState).authorization_state._ === "authorizationStateWaitOtherDeviceConfirmation")
+                    if ((update as updateAuthorizationState).authorization_state._ === "authorizationStateWaitOtherDeviceConfirmation") {
                         SetQrLink(((update as updateAuthorizationState).authorization_state as authorizationStateWaitOtherDeviceConfirmation).link);
-
+                    }
             })
         })
     }
@@ -58,6 +59,9 @@ export const App = () => {
 
         case 'authorizationStateWaitRegistration':
             return <RegistrationRoute authStateWaitRegistration={authState as authorizationStateWaitRegistration}/>
+
+        case "authorizationStateReady":
+            return <ChatList/>
     }
     return <Load/>
 }
