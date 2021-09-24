@@ -7,7 +7,8 @@ import {AppReduxer, State} from "../Redux/AppReduxer";
 import {AddCSSSelector} from "../AddCSSSelector";
 
 AddCSSSelector("body", {
-    userSelect: "none"
+    userSelect: "none",
+    margin: 0
 })
 
 let store = createStore(AppReduxer, new State());
