@@ -17,7 +17,7 @@ export const WallpaperBackground: React.FC<IWallpaperBackgroundProps> = ({back})
         client.invoke({_: "downloadFile", file_id:back.document.document.id, priority: 32}).then((result) => setPath(result.local.path));
 
     return (
-        <div id={fullScreenDiv} style={{overflow: "hidden"}}>
+        <div id={fullScreenDiv} style={{overflow: "hidden", zIndex: -1}}>
             <img style={{width: "100%"}} src={path}/>
         </div>)
 }
