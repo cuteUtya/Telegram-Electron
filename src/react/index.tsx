@@ -5,10 +5,17 @@ import { App } from "./Components/App/App";
 import {createStore} from "redux";
 import {AppReduxer, State} from "../Redux/AppReduxer";
 import {AddCSSSelector} from "../AddCSSSelector";
+import {Font, PanelBorderRadius} from "../AppStyles";
 
 AddCSSSelector("body", {
     userSelect: "none",
     margin: 0
+})
+
+AddCSSSelector("*", {
+    outline: "none",
+    borderRadius: `${PanelBorderRadius}px`,
+    fontFamily: Font
 })
 
 let store = createStore(AppReduxer, new State());
